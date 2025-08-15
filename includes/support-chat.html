@@ -1,0 +1,115 @@
+<!-- Support Chat Button -->
+<div id="supportChatButton" class="support-chat-button">
+    <div class="chat-button-icon">
+        <i class="bi bi-chat-dots-fill"></i>
+    </div>
+    <div class="chat-button-pulse"></div>
+    <div class="chat-button-badge" style="display: none;">
+        <span>1</span>
+    </div>
+</div>
+
+<!-- Support Chat Modal -->
+<div id="supportChatModal" class="support-chat-modal">
+    <div class="chat-container">
+        <!-- Chat Header -->
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">
+                    <img src="/assets/img/support-avatar.png" alt="Support">
+                    <span class="chat-status-indicator online"></span>
+                </div>
+                <div class="chat-header-text">
+                    <h5>Dəstək Xidməti</h5>
+                    <span class="chat-status">Onlayn</span>
+                </div>
+            </div>
+            <div class="chat-header-actions">
+                <button class="btn-chat-action" id="chatCallBtn" title="Zəng et">
+                    <i class="bi bi-telephone"></i>
+                </button>
+                <button class="btn-chat-action" id="chatWhatsappBtn" title="WhatsApp">
+                    <i class="bi bi-whatsapp"></i>
+                </button>
+                <button class="btn-chat-action" id="chatEmailBtn" title="E-mail">
+                    <i class="bi bi-envelope"></i>
+                </button>
+                <button class="btn-chat-action" id="chatMinimizeBtn">
+                    <i class="bi bi-dash"></i>
+                </button>
+                <button class="btn-chat-action" id="chatCloseBtn">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Chat Messages -->
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be loaded here -->
+        </div>
+        
+        <!-- Quick Replies -->
+        <div class="chat-quick-replies" id="quickReplies">
+            <button class="quick-reply-btn" data-message="Məhsullar haqqında">
+                <i class="bi bi-box-seam"></i> Məhsullar
+            </button>
+            <button class="quick-reply-btn" data-message="Qiymətlər">
+                <i class="bi bi-tag"></i> Qiymətlər
+            </button>
+            <button class="quick-reply-btn" data-message="Sifariş statusu">
+                <i class="bi bi-truck"></i> Sifariş
+            </button>
+            <button class="quick-reply-btn" data-message="Əlaqə məlumatları">
+                <i class="bi bi-telephone"></i> Əlaqə
+            </button>
+        </div>
+        
+        <!-- Chat Input -->
+        <div class="chat-input-container">
+            <div class="chat-input-actions">
+                <button class="btn-input-action" id="chatAttachBtn">
+                    <i class="bi bi-paperclip"></i>
+                    <input type="file" id="chatFileInput" accept="image/*,audio/*" style="display: none;">
+                </button>
+                <button class="btn-input-action" id="chatEmojiBtn">
+                    <i class="bi bi-emoji-smile"></i>
+                </button>
+                <button class="btn-input-action" id="chatVoiceBtn">
+                    <i class="bi bi-mic"></i>
+                </button>
+            </div>
+            <div class="chat-input-wrapper">
+                <input type="text" id="chatInput" class="chat-input" placeholder="Mesajınızı yazın..." autocomplete="off">
+                <button id="chatSendBtn" class="chat-send-btn">
+                    <i class="bi bi-send"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Emoji Picker -->
+        <div class="emoji-picker" id="emojiPicker" style="display: none;">
+            <div class="emoji-grid">
+                <span class="emoji">😊</span>
+                <span class="emoji">😂</span>
+                <span class="emoji">❤️</span>
+                <span class="emoji">👍</span>
+                <span class="emoji">👋</span>
+                <span class="emoji">🙏</span>
+                <span class="emoji">💯</span>
+                <span class="emoji">✅</span>
+                <span class="emoji">🎉</span>
+                <span class="emoji">🔥</span>
+                <span class="emoji">💪</span>
+                <span class="emoji">👏</span>
+                <span class="emoji">🤝</span>
+                <span class="emoji">📞</span>
+                <span class="emoji">📧</span>
+                <span class="emoji">🏠</span>
+                <span class="emoji">🚚</span>
+                <span class="emoji">💰</span>
+                <span class="emoji">📦</span>
+                <span class="emoji">⏰</span>
+            </div>
+        </div>
+    </div>
+</div>
