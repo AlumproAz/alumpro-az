@@ -1,0 +1,258 @@
+/* Admin Panel Styles */
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.admin-sidebar {
+    width: 260px;
+    background: linear-gradient(135deg, #1a936f, #1a5493);
+    color: white;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.admin-sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar-brand {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-brand img {
+    max-width: 150px;
+    transition: all 0.3s;
+}
+
+.admin-sidebar.collapsed .sidebar-brand img {
+    max-width: 40px;
+}
+
+.sidebar-user {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-sidebar.collapsed .sidebar-user > div {
+    display: none;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-header {
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.admin-sidebar.collapsed .menu-header {
+    display: none;
+}
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.sidebar-menu li a:hover,
+.sidebar-menu li.active a {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.sidebar-menu li a i {
+    font-size: 18px;
+    width: 24px;
+    margin-right: 12px;
+}
+
+.admin-sidebar.collapsed .sidebar-menu li a span {
+    display: none;
+}
+
+/* Main Content */
+.admin-content {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    transition: all 0.3s;
+}
+
+.admin-content.expanded {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+}
+
+/* Top Bar */
+.admin-topbar {
+    background: white;
+    padding: 15px 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar-search {
+    flex: 1;
+    max-width: 400px;
+    margin: 0 30px;
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.topbar-actions .badge {
+    top: 5px;
+    right: 5px;
+    font-size: 10px;
+    padding: 2px 5px;
+}
+
+/* Page Content */
+.admin-page-content {
+    padding: 30px;
+}
+
+.page-header {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-header h1 {
+    font-size: 28px;
+    margin: 0;
+    color: #333;
+}
+
+/* Statistics Cards */
+.stat-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.stat-card-body {
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+.stat-icon {
+    font-size: 48px;
+    opacity: 0.8;
+}
+
+.stat-content h3 {
+    font-size: 32px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.stat-content p {
+    margin: 5px 0 0;
+    opacity: 0.9;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+    background: white;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 20px;
+    font-weight: 600;
+}
+
+/* Tables */
+.table {
+    margin: 0;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 15px;
+}
+
+.table td {
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .admin-sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .admin-sidebar.show {
+        transform: translateX(0);
+    }
+    
+    .admin-content {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .admin-content {
+        background: #1a1a1a;
+        color: #e0e0e0;
+    }
+    
+    .admin-topbar {
+        background: #2a2a2a;
+        color: #e0e0e0;
+    }
+    
+    .card {
+        background: #2a2a2a;
+        color: #e0e0e0;
+    }
+    
+    .card-header {
+        background: #2a2a2a;
+        border-color: #3a3a3a;
+    }
+    
+    .table {
+        color: #e0e0e0;
+    }
+}
