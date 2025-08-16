@@ -14,7 +14,7 @@ if (!$auth->isLoggedIn()) {
     exit;
 }
 
-$term = $_GET['term'] ?? '';
+$term = $_GET['q'] ?? $_GET['term'] ?? '';
 $storeId = $_SESSION['user']['store_id'] ?? null;
 
 if (strlen($term) < 2) {
