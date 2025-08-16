@@ -1,0 +1,41 @@
+# Dependencies
+vendor/
+node_modules/
+*.lock
+
+# Build artifacts  
+dist/
+build/
+
+# Environment and configuration
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+*.tmp
+*.temp
+*.zip~
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Uploads directory
+uploads/*
+!uploads/.gitkeep
+
+# Cache
+cache/
+*.cache
