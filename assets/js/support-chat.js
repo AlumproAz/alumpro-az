@@ -8,8 +8,70 @@ class SupportChat {
         this.isRecording = false;
         this.typingTimeout = null;
         this.agentJoined = false;
+        this.responses = this.initializeResponses();
         
         this.init();
+    }
+    
+    initializeResponses() {
+        return {
+            greetings: [
+                'Salam! Alumpro.Az dəstək xidmətinə xoş gəlmisiniz! Sizə necə kömək edə bilərəm?',
+                'Xoş gəlmisiniz! Məhsullarımız və xidmətlərimiz haqqında hər hansı sualınız varmı?'
+            ],
+            products: {
+                keywords: ['məhsul', 'profil', 'şüşə', 'alüminium', 'qapı', 'pəncərə', 'dolap'],
+                responses: [
+                    '📦 **Məhsullarımız:**\n\n• Alüminium profillər (15-45 ₼/metr)\n• Şüşəli məhsullar (50-120 ₼/m²)\n• Dolap qapıları\n• Mətbəx qapaqları\n• Arakəsmə sistemləri\n\nHangi məhsul sizi maraqlandırır?',
+                    '🏗️ Yüksək keyfiyyətli alüminium məhsullarımız:\n\n✅ Müxtəlif rəngli profillər\n✅ Şüşə növləri\n✅ Professional quraşdırma\n✅ Zəmanət xidməti'
+                ]
+            },
+            prices: {
+                keywords: ['qiymət', 'qədər', 'nə qədər', 'məbləğ', 'pul'],
+                responses: [
+                    '💰 **Qiymət Məlumatı:**\n\n📐 Alüminium profillər: 15-45 ₼/metr\n🔷 Şüşə məhsullar: 50-120 ₼/m²\n🔧 Quraşdırma: 25-50 ₼/m²\n\nDəqiq qiymət üçün ölçülərinizi bildirin!',
+                    '💡 Qiymətlər məhsul növünə və ölçüyə görə dəyişir. Pulsuz ölçü və qiymət hesablaması üçün bizimlə əlaqə saxlayın!'
+                ]
+            },
+            orders: {
+                keywords: ['sifariş', 'status', 'hazır', 'nə vaxt', 'çatdırılma'],
+                responses: [
+                    '📋 **Sifariş Məlumatı:**\n\nSifariş nömrənizi daxil edin (məs: ORD-20250812-1234)\n\nVə ya sifariş statusunuzu yoxlayaq:\n• Gözləmədə\n• İstehsalatda\n• Hazır\n• Çatdırılıb',
+                    '🚚 **Çatdırılma müddəti:**\n\n• Standart sifarişlər: 3-5 iş günü\n• Xüsusi sifarişlər: 5-10 iş günü\n• Təcili sifarişlər: 1-2 iş günü (əlavə haqqla)'
+                ]
+            },
+            contact: {
+                keywords: ['əlaqə', 'telefon', 'ünvan', 'vaxt', 'saatlar'],
+                responses: [
+                    '📞 **Əlaqə məlumatları:**\n\n📱 Telefon: +994 12 345 67 89\n📧 E-mail: info@alumpro.az\n📍 Ünvan: Bakı şəh., Yasamal r-nu\n⏰ İş saatları: 09:00-18:00 (B.e - Cümə)',
+                    '🌐 Bizimlə əlaqə yolları:\n\n• WhatsApp: +994 12 345 67 89\n• Telefon zəngi\n• E-mail: info@alumpro.az\n• Sayt üzərindən mesaj'
+                ]
+            },
+            installation: {
+                keywords: ['quraşdırma', 'qurma', 'montaj', 'usta', 'master'],
+                responses: [
+                    '🔧 **Quraşdırma xidməti:**\n\n👨‍🔧 Professional ustalar\n📅 Müəyyən vaxt təyini\n✅ Zəmanətli iş\n💰 Quraşdırma qiyməti: 25-50 ₼/m²\n\nQuraşdırma üçün əlaqə saxlayın!',
+                    '⚡ **Sürətli quraşdırma:**\n\n• Eyni gün quraşdırma mümkün\n• Təmiz və səliqəli iş\n• Alətlər bizim tərəfimizdən\n• 1 il zəmanət'
+                ]
+            },
+            warranty: {
+                keywords: ['zəmanət', 'qarantiya', 'zəmin', 'təmir'],
+                responses: [
+                    '🛡️ **Zəmanət xidməti:**\n\n• Məhsullar: 2 il zəmanət\n• Quraşdırma: 1 il zəmanət\n• Pulsuz texniki dəstək\n• Zəmanət sənədi verilir\n\nZəmanət şərtləri haqqında ətraflı məlumat istəyirsiniz?'
+                ]
+            },
+            thanks: {
+                keywords: ['təşəkkür', 'sağ ol', 'minnətdar'],
+                responses: [
+                    '🙏 Rica edirəm! Başqa sualınız varsa, hər zaman kömək etməyə hazıram!',
+                    '😊 Çox xoşdur! Alumpro.Az ailəsinin üzvü olduğunuz üçün təşəkkür edirik!'
+                ]
+            },
+            default: [
+                'Sualınızı tam başa düşmədim. Aşağıdakılardan birini seçə bilərsiniz:\n\n📦 Məhsullar\n💰 Qiymətlər\n📋 Sifariş statusu\n📞 Əlaqə məlumatları',
+                'Kömək etmək üçün buradayam! Hansı mövzuda məlumat istəyirsiniz?'
+            ]
+        };
     }
     
     init() {
@@ -166,26 +228,92 @@ class SupportChat {
         this.showTypingIndicator();
         
         try {
-            const response = await fetch('/api/chat/send.php', {
+            // Generate intelligent response
+            const aiResponse = this.generateIntelligentResponse(message);
+            
+            // Simulate realistic response delay
+            const delay = Math.random() * 2000 + 1000; // 1-3 seconds
+            
+            setTimeout(() => {
+                this.hideTypingIndicator();
+                this.displayMessage({
+                    sender_type: 'support',
+                    message: aiResponse,
+                    created_at: new Date().toISOString()
+                });
+            }, delay);
+            
+            // Also send to server for logging
+            await fetch('/api/chat/send.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     chat_id: this.chatId,
-                    message: message
+                    message: message,
+                    ai_response: aiResponse
                 })
             });
             
-            const data = await response.json();
-            
-            // Remove typing indicator
+        } catch (error) {
             this.hideTypingIndicator();
+            this.displayMessage({
+                sender_type: 'support',
+                message: 'Üzr istəyirəm, texniki problem yarandı. Zəhmət olmasa bir az sonra yenidən cəhd edin.',
+                created_at: new Date().toISOString()
+            });
+        }
+    }
+    
+    generateIntelligentResponse(message) {
+        const lowerMessage = message.toLowerCase();
+        
+        // Check for greetings first
+        if (this.isFirstMessage()) {
+            return this.getRandomResponse(this.responses.greetings);
+        }
+        
+        // Check for specific topics
+        for (const [topic, data] of Object.entries(this.responses)) {
+            if (topic === 'greetings' || topic === 'default') continue;
             
-            // Display AI response if no agent is online
-            if (!this.agentJoined && data.response) {
-                setTimeout(() => {
-                    this.displayMessage({
+            if (data.keywords && data.keywords.some(keyword => lowerMessage.includes(keyword))) {
+                return this.getRandomResponse(data.responses);
+            }
+        }
+        
+        // Check for order number pattern
+        const orderPattern = /[A-Z]{3}-\d{8}-\d{4}/;
+        if (orderPattern.test(message.toUpperCase())) {
+            return this.generateOrderStatusResponse(message);
+        }
+        
+        // Check for phone number pattern
+        const phonePattern = /\+?994\d{9}|\d{7,9}/;
+        if (phonePattern.test(message)) {
+            return 'Telefon nömrənizi qəbul etdik. Sizinlə tezliklə əlaqə saxlayacağıq. Başqa necə kömək edə bilərəm?';
+        }
+        
+        // Default response
+        return this.getRandomResponse(this.responses.default);
+    }
+    
+    generateOrderStatusResponse(orderNumber) {
+        const statuses = ['gözləmədə', 'istehsalatda', 'hazır', 'çatdırılıb'];
+        const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+        
+        return `🔍 **Sifariş statusu:** ${orderNumber}\n\n📊 Status: Sifarişiniz ${randomStatus}\n⏱ Təxmini hazır olma: 2-3 iş günü\n\nDaha ətraflı məlumat üçün +994 12 345 67 89 nömrəsi ilə əlaqə saxlayın.`;
+    }
+    
+    getRandomResponse(responses) {
+        return responses[Math.floor(Math.random() * responses.length)];
+    }
+    
+    isFirstMessage() {
+        const messages = this.elements.messages.querySelectorAll('.user-message');
+        return messages.length <= 1;
+    }
                         sender_type: 'auto',
                         message: data.response,
                         created_at: new Date().toISOString()
