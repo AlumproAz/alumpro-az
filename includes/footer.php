@@ -65,97 +65,8 @@ $email = $db->selectOne("SELECT setting_value FROM settings WHERE setting_key = 
         </div>
     </footer>
     
-    <!-- Mobile Navigation -->
-    <nav class="mobile-nav d-md-none fixed-bottom bg-dark py-2">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col">
-                    <a href="<?= SITE_URL ?>" class="text-white d-block">
-                        <i class="bi bi-house fs-5"></i>
-                        <div class="small">Ana Səhifə</div>
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="<?= SITE_URL ?>/products.php" class="text-white d-block">
-                        <i class="bi bi-box-seam fs-5"></i>
-                        <div class="small">Məhsullar</div>
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="<?= SITE_URL ?>/services.php" class="text-white d-block">
-                        <i class="bi bi-gear fs-5"></i>
-                        <div class="small">Xidmətlər</div>
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="<?= SITE_URL ?>/contact.php" class="text-white d-block">
-                        <i class="bi bi-envelope fs-5"></i>
-                        <div class="small">Əlaqə</div>
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="#" class="text-white d-block" id="openSupportChat">
-                        <i class="bi bi-chat-dots fs-5"></i>
-                        <div class="small">Dəstək</div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
-    
-    <!-- Support Chat Modal -->
-    <div class="modal fade" id="supportChatModal" tabindex="-1" aria-labelledby="supportChatModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="supportChatModalLabel"><i class="bi bi-headset"></i> Dəstək Xidməti</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <div id="chat-messages" class="p-3" style="height: 300px; overflow-y: auto;">
-                        <div class="d-flex mb-3">
-                            <div class="support-avatar me-2">
-                                <img src="<?= SITE_URL ?>/assets/img/support-avatar.png" alt="Support" width="40" height="40" class="rounded-circle">
-                            </div>
-                            <div class="support-message bg-light p-3 rounded">
-                                <p class="mb-0">Salam! Sizə necə kömək edə bilərəm?</p>
-                                <small class="text-muted">14:25</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="support-keywords p-3 border-top">
-                        <div class="d-flex flex-wrap gap-2 mb-3">
-                            <button type="button" class="btn btn-sm btn-outline-secondary keyword-btn">Məhsullar</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary keyword-btn">Qiymətlər</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary keyword-btn">Sifarişlər</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary keyword-btn">Çatdırılma</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary keyword-btn">Ödəniş</button>
-                        </div>
-                    </div>
-                    <div class="chat-input p-3 border-top">
-                        <form id="chatForm">
-                            <div class="input-group">
-                                <button type="button" class="btn btn-outline-secondary" id="voiceInput">
-                                    <i class="bi bi-mic"></i>
-                                </button>
-                                <input type="text" class="form-control" id="messageInput" placeholder="Mesajınızı yazın...">
-                                <button type="button" class="btn btn-outline-secondary" id="attachmentBtn">
-                                    <i class="bi bi-paperclip"></i>
-                                </button>
-                                <button type="button" class="btn btn-outline-secondary" id="emojiBtn">
-                                    <i class="bi bi-emoji-smile"></i>
-                                </button>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-send"></i>
-                                </button>
-                            </div>
-                            <input type="file" id="attachmentInput" class="d-none">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Support Chat Button -->
+    <?php include_once __DIR__ . '/support-chat.html'; ?>
     
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -163,6 +74,7 @@ $email = $db->selectOne("SELECT setting_value FROM settings WHERE setting_key = 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Custom JS -->
     <script src="<?= SITE_URL ?>/assets/js/script.js"></script>
+    <script src="<?= SITE_URL ?>/assets/js/support-chat.js"></script>
     
     <!-- PWA Service Worker Registration -->
     <script>
@@ -178,103 +90,54 @@ $email = $db->selectOne("SELECT setting_value FROM settings WHERE setting_key = 
         });
     }
     
-    // Support chat functionality
-    $(document).ready(function() {
-        $('#openSupportChat').click(function(e) {
-            e.preventDefault();
-            $('#supportChatModal').modal('show');
-        });
-        
-        $('.keyword-btn').click(function() {
-            $('#messageInput').val($(this).text());
-        });
-        
-        $('#chatForm').submit(function(e) {
-            e.preventDefault();
-            
-            const message = $('#messageInput').val().trim();
-            if (!message) return;
-            
-            // Add user message to chat
-            const now = new Date();
-            const timeStr = now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
-            
-            $('#chat-messages').append(`
-                <div class="d-flex justify-content-end mb-3">
-                    <div class="user-message bg-primary text-white p-3 rounded">
-                        <p class="mb-0">${message}</p>
-                        <small class="text-light">${timeStr}</small>
-                    </div>
-                </div>
-            `);
-            
-            $('#messageInput').val('');
-            
-            // Scroll to bottom
-            const chatMessages = document.getElementById('chat-messages');
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            
-            // Send message to server via AJAX (in a real implementation)
-            // For now, simulate auto-response after 1 second
-            setTimeout(function() {
-                // Simulate automatic response
-                $('#chat-messages').append(`
-                    <div class="d-flex mb-3">
-                        <div class="support-avatar me-2">
-                            <img src="<?= SITE_URL ?>/assets/img/support-avatar.png" alt="Support" width="40" height="40" class="rounded-circle">
-                        </div>
-                        <div class="support-message bg-light p-3 rounded">
-                            <p class="mb-0">Sorğunuzu qəbul etdik. Tezliklə sizə cavab verəcəyik.</p>
-                            <small class="text-muted">${timeStr}</small>
-                        </div>
-                    </div>
-                `);
-                
-                // Scroll to bottom again
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 1000);
-        });
-        
-        // Voice input functionality
-        $('#voiceInput').click(function() {
-            if ('webkitSpeechRecognition' in window) {
-                const recognition = new webkitSpeechRecognition();
-                recognition.lang = 'az-AZ';
-                recognition.start();
-                
-                $(this).addClass('btn-danger').html('<i class="bi bi-mic-fill"></i>');
-                
-                recognition.onresult = function(event) {
-                    const transcript = event.results[0][0].transcript;
-                    $('#messageInput').val(transcript);
-                    $('#voiceInput').removeClass('btn-danger').html('<i class="bi bi-mic"></i>');
-                };
-                
-                recognition.onerror = function() {
-                    $('#voiceInput').removeClass('btn-danger').html('<i class="bi bi-mic"></i>');
-                };
-                
-                recognition.onend = function() {
-                    $('#voiceInput').removeClass('btn-danger').html('<i class="bi bi-mic"></i>');
-                };
-            } else {
-                alert('Səs tanıma funksiyası bu brauzer tərəfindən dəstəklənmir.');
+    // OneSignal Push Notifications
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+        OneSignal.init({
+            appId: "<?= ONESIGNAL_APP_ID ?>",
+            allowLocalhostAsSecureOrigin: true,
+            notifyButton: {
+                enable: false // Disable default button, we have our own
+            },
+            promptOptions: {
+                siteName: "<?= SITE_NAME ?>",
+                autoAcceptTitle: "Bildirişlərə icazə ver",
+                actionMessage: "Yeni sifarişlər və endirimlərdən xəbərdar olmaq üçün bildirişlərə icazə verin.",
+                exampleNotificationTitleDesktop: "Bu cür bildirişlər alacaqsınız",
+                exampleNotificationMessageDesktop: "Yeni sifariş və ya endirimlər haqqında məlumat",
+                exampleNotificationTitleMobile: "Bu cür bildirişlər alacaqsınız",
+                exampleNotificationMessageMobile: "Yeni sifariş və ya endirimlər haqqında məlumat",
+                acceptButton: "İcazə ver",
+                cancelButton: "Xeyr",
+                showCredit: false
             }
         });
         
-        // Attachment handling
-        $('#attachmentBtn').click(function() {
-            $('#attachmentInput').click();
-        });
-        
-        $('#attachmentInput').change(function() {
-            if (this.files && this.files[0]) {
-                // In a real implementation, you would upload the file
-                alert('Fayl seçildi: ' + this.files[0].name);
+        // Subscribe user automatically after permission granted
+        OneSignal.on('subscriptionChange', function (isSubscribed) {
+            if (isSubscribed) {
+                OneSignal.getUserId().then(function(userId) {
+                    if (userId) {
+                        // Send user ID to server to store in database
+                        fetch('<?= SITE_URL ?>/api/update-push-token.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                user_id: '<?= $auth->isLoggedIn() ? $currentUser['id'] : '' ?>',
+                                push_token: userId
+                            })
+                        });
+                    }
+                });
             }
         });
     });
     </script>
+    
+    <!-- OneSignal SDK -->
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 
     <?php if (isset($extraScripts)) echo $extraScripts; ?>
 </body>

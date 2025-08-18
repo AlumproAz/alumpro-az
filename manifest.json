@@ -1,11 +1,11 @@
 {
     "name": "Alumpro.Az",
     "short_name": "Alumpro",
-    "description": "Alüminium profillər və şüşəli məhsullar",
+    "description": "Alüminium profillər və şüşəli məhsullar - Tam Anbar-Satış Sistemi",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#1a936f",
-    "theme_color": "#1a936f",
+    "background_color": "#00d4aa",
+    "theme_color": "#00d4aa",
     "orientation": "portrait",
     "icons": [
         {
@@ -50,5 +50,23 @@
         }
     ],
     "categories": ["business", "shopping"],
-    "lang": "az"
+    "lang": "az",
+    "scope": "/",
+    "display_override": ["window-controls-overlay"],
+    "shortcuts": [
+        {
+            "name": "Məhsullar",
+            "short_name": "Məhsullar",
+            "description": "Alüminium profillər və şüşəli məhsullar",
+            "url": "/products.php",
+            "icons": [{ "src": "assets/img/icon-192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "Dəstək",
+            "short_name": "Dəstək",
+            "description": "Müştəri dəstək xidməti",
+            "url": "/contact.php",
+            "icons": [{ "src": "assets/img/icon-192.png", "sizes": "192x192" }]
+        }
+    ]
 }

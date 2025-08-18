@@ -5,15 +5,21 @@
     right: 30px;
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #1a936f, #1a5493);
+    background: linear-gradient(135deg, #00d4aa, #0081d4);
     border-radius: 50%;
     cursor: pointer;
-    box-shadow: 0 5px 20px rgba(26, 147, 111, 0.4);
+    box-shadow: 0 5px 20px rgba(0, 212, 170, 0.4);
     z-index: 9998;
     display: flex;
     align-items: center;
     justify-content: center;
     animation: float 3s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+.support-chat-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 212, 170, 0.6);
 }
 
 @keyframes float {
@@ -37,7 +43,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #1a936f, #1a5493);
+    background: linear-gradient(135deg, #00d4aa, #0081d4);
     border-radius: 50%;
     animation: pulse 2s infinite;
 }
@@ -45,10 +51,14 @@
 @keyframes pulse {
     0% {
         transform: scale(1);
-        opacity: 1;
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.3;
     }
     100% {
-        transform: scale(1.5);
+        transform: scale(1.4);
         opacity: 0;
     }
 }

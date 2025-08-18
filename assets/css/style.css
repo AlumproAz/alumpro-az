@@ -1,7 +1,16 @@
 /* Main Stylesheet - Alumpro.Az */
 :root {
-    --primary-color: #1a936f;
-    --secondary-color: #1a5493;
+    /* Emerald Green & Blue Gradient Theme */
+    --primary-color: #00d4aa; /* Emerald Green */
+    --secondary-color: #0081d4; /* Blue */
+    --emerald-gradient: linear-gradient(135deg, #00d4aa 0%, #0081d4 100%);
+    --emerald-gradient-reversed: linear-gradient(135deg, #0081d4 0%, #00d4aa 100%);
+    --emerald-light: #64ffda;
+    --emerald-dark: #00a085;
+    --blue-light: #40b3ff;
+    --blue-dark: #0055aa;
+    
+    /* Supporting colors */
     --success-color: #28a745;
     --danger-color: #dc3545;
     --warning-color: #ffc107;
@@ -9,6 +18,10 @@
     --light-color: #f8f9fa;
     --dark-color: #343a40;
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    
+    /* PWA & Mobile specific */
+    --mobile-nav-height: 60px;
+    --header-height: 70px;
 }
 
 * {
@@ -54,22 +67,67 @@ a:hover {
 /* Buttons */
 .btn {
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 8px;
     font-weight: 500;
     transition: all 0.3s ease;
     border: none;
     cursor: pointer;
     display: inline-block;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: var(--emerald-gradient);
     color: white;
+    box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(26, 147, 111, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 212, 170, 0.4);
+    background: var(--emerald-gradient-reversed);
+}
+
+.btn-secondary {
+    background: var(--emerald-gradient-reversed);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 129, 212, 0.3);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 129, 212, 0.4);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: var(--emerald-gradient);
+    color: white;
+    border-color: transparent;
+}
+
+/* Gradient Text */
+.gradient-text {
+    background: var(--emerald-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+/* Background Gradients */
+.bg-gradient-primary {
+    background: var(--emerald-gradient) !important;
+}
+
+.bg-gradient-secondary {
+    background: var(--emerald-gradient-reversed) !important;
 }
 
 /* Cards */
@@ -96,16 +154,16 @@ a:hover {
 
 /* Forms */
 .form-control {
-    border: 1px solid #e3e6f0;
-    border-radius: 5px;
-    padding: 10px 15px;
+    border: 2px solid #e3e6f0;
+    border-radius: 8px;
+    padding: 12px 15px;
     font-size: 14px;
     transition: all 0.3s ease;
 }
 
 .form-control:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.2rem rgba(26, 147, 111, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(0, 212, 170, 0.25);
     outline: none;
 }
 
@@ -113,6 +171,22 @@ a:hover {
     font-weight: 500;
     margin-bottom: 0.5rem;
     color: #5a5c69;
+}
+
+.input-group-text {
+    background: var(--emerald-gradient);
+    color: white;
+    border: 2px solid var(--primary-color);
+    border-right: none;
+}
+
+.input-group .form-control {
+    border-left: none;
+}
+
+.input-group .form-control:focus {
+    border-color: var(--primary-color);
+    border-left: none;
 }
 
 /* Tables */
@@ -151,15 +225,157 @@ a:hover {
 .navbar {
     box-shadow: 0 2px 4px rgba(0,0,0,0.08);
     padding: 1rem 0;
+    height: var(--header-height);
+    background: var(--emerald-gradient) !important;
 }
 
 .navbar-brand img {
     height: 40px;
 }
 
+.navbar-toggler {
+    border: none;
+    padding: 4px 8px;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+/* Mobile Navigation - Fixed Bottom */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    z-index: 1050;
+    height: var(--mobile-nav-height);
+    border-top: 2px solid var(--primary-color);
+}
+
+.mobile-nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 4px;
+    text-decoration: none;
+    color: #666;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.mobile-nav-item.active {
+    color: var(--primary-color);
+    background: linear-gradient(to top, rgba(0, 212, 170, 0.1), transparent);
+}
+
+.mobile-nav-item:hover {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.mobile-nav-item i {
+    font-size: 18px;
+    margin-bottom: 2px;
+}
+
+.mobile-nav-item span {
+    font-size: 10px;
+    font-weight: 500;
+}
+
+/* Animated Support Button */
+.support-chat-button {
+    position: fixed;
+    bottom: 80px; /* Above mobile nav on mobile */
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: var(--emerald-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1060;
+    box-shadow: 0 4px 20px rgba(0, 212, 170, 0.4);
+    transition: all 0.3s ease;
+    animation: supportButtonPulse 2s infinite;
+}
+
+.support-chat-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(0, 212, 170, 0.6);
+}
+
+.support-chat-button .chat-button-icon {
+    color: white;
+    font-size: 24px;
+    position: relative;
+    z-index: 2;
+}
+
+.support-chat-button .chat-button-pulse {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--emerald-gradient);
+    animation: pulse 2s infinite;
+    opacity: 0.7;
+}
+
+.support-chat-button .chat-button-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    background: var(--danger-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    border: 2px solid white;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+@keyframes supportButtonPulse {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(0, 212, 170, 0.4);
+    }
+    50% {
+        box-shadow: 0 6px 25px rgba(0, 212, 170, 0.6);
+    }
+}
+
 /* Page Header */
 .page-header-section {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: var(--emerald-gradient);
     color: white;
     padding: 60px 0;
     margin-bottom: 40px;
@@ -192,7 +408,7 @@ a:hover {
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: var(--emerald-gradient);
     color: white;
     padding: 100px 0;
     position: relative;
@@ -227,13 +443,33 @@ a:hover {
     width: 80px;
     height: 80px;
     margin: 0 auto 20px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: var(--emerald-gradient);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     font-size: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+}
+
+.feature-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    text-align: center;
+    height: 100%;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.feature-item .feature-icon {
+    margin: 0 auto 1.5rem;
 }
 
 /* Footer */
@@ -275,6 +511,55 @@ footer a:hover {
     
     .hero-section { padding: 60px 0; }
     .page-header-section { padding: 40px 0; }
+    
+    /* Show mobile navigation */
+    .mobile-nav {
+        display: flex;
+    }
+    
+    /* Add bottom padding to body to account for mobile nav */
+    body {
+        padding-bottom: var(--mobile-nav-height);
+    }
+    
+    /* Hide desktop navigation collapse on mobile */
+    .navbar-nav {
+        display: none !important;
+    }
+    
+    /* Adjust support button position for mobile nav */
+    .support-chat-button {
+        bottom: calc(var(--mobile-nav-height) + 20px);
+    }
+    
+    /* Mobile-first padding adjustments */
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    /* Mobile card improvements */
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    /* Mobile feature items */
+    .feature-item {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (min-width: 769px) {
+    /* Desktop: Hide mobile nav */
+    .mobile-nav {
+        display: none;
+    }
+    
+    /* Desktop: Adjust support button */
+    .support-chat-button {
+        bottom: 20px;
+    }
 }
 
 /* Loading Spinner */
