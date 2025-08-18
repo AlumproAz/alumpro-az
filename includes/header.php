@@ -23,6 +23,7 @@ $logoPath = $db->selectOne("SELECT setting_value FROM settings WHERE setting_key
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/style.css">
+    <link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/support-chat.css">
     <!-- Favicon -->
     <link rel="shortcut icon" href="<?= SITE_URL ?>/assets/img/favicon.ico" type="image/x-icon">
     <!-- Web App Manifest -->
@@ -137,6 +138,53 @@ $logoPath = $db->selectOne("SELECT setting_value FROM settings WHERE setting_key
             </div>
         </nav>
     </header>
+    
+    <!-- Mobile Navigation - Fixed Bottom -->
+    <nav class="mobile-nav d-flex">
+        <a href="<?= SITE_URL ?>" class="mobile-nav-item <?= basename($_SERVER['PHP_SELF']) == 'home.php' ? 'active' : '' ?>">
+            <i class="bi bi-house-door"></i>
+            <span>Ana Səhifə</span>
+        </a>
+        <a href="<?= SITE_URL ?>/products.php" class="mobile-nav-item <?= basename($_SERVER['PHP_SELF']) == 'products.php' ? 'active' : '' ?>">
+            <i class="bi bi-box-seam"></i>
+            <span>Məhsullar</span>
+        </a>
+        <a href="<?= SITE_URL ?>/services.php" class="mobile-nav-item <?= basename($_SERVER['PHP_SELF']) == 'services.php' ? 'active' : '' ?>">
+            <i class="bi bi-gear"></i>
+            <span>Xidmətlər</span>
+        </a>
+        <?php if ($auth->isLoggedIn()): ?>
+            <?php if ($auth->hasRole('customer')): ?>
+                <a href="<?= SITE_URL ?>/customer/orders.php" class="mobile-nav-item">
+                    <i class="bi bi-bag"></i>
+                    <span>Sifarişlər</span>
+                </a>
+            <?php elseif ($auth->hasRole('sales')): ?>
+                <a href="<?= SITE_URL ?>/sales/index.php" class="mobile-nav-item">
+                    <i class="bi bi-shop"></i>
+                    <span>Satış</span>
+                </a>
+            <?php elseif ($auth->hasRole('admin')): ?>
+                <a href="<?= SITE_URL ?>/admin/index.php" class="mobile-nav-item">
+                    <i class="bi bi-speedometer2"></i>
+                    <span>Admin</span>
+                </a>
+            <?php endif; ?>
+            <a href="<?= SITE_URL ?>/profile.php" class="mobile-nav-item">
+                <i class="bi bi-person-circle"></i>
+                <span>Profil</span>
+            </a>
+        <?php else: ?>
+            <a href="<?= SITE_URL ?>/contact.php" class="mobile-nav-item <?= basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : '' ?>">
+                <i class="bi bi-envelope"></i>
+                <span>Əlaqə</span>
+            </a>
+            <a href="<?= SITE_URL ?>/login.php" class="mobile-nav-item">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Giriş</span>
+            </a>
+        <?php endif; ?>
+    </nav>
     
     <!-- Main Content -->
     <main class="main-content">
