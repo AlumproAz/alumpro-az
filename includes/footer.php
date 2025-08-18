@@ -89,7 +89,55 @@ $email = $db->selectOne("SELECT setting_value FROM settings WHERE setting_key = 
             });
         });
     }
+    
+    // OneSignal Push Notifications
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+        OneSignal.init({
+            appId: "<?= ONESIGNAL_APP_ID ?>",
+            allowLocalhostAsSecureOrigin: true,
+            notifyButton: {
+                enable: false // Disable default button, we have our own
+            },
+            promptOptions: {
+                siteName: "<?= SITE_NAME ?>",
+                autoAcceptTitle: "Bildirişlərə icazə ver",
+                actionMessage: "Yeni sifarişlər və endirimlərdən xəbərdar olmaq üçün bildirişlərə icazə verin.",
+                exampleNotificationTitleDesktop: "Bu cür bildirişlər alacaqsınız",
+                exampleNotificationMessageDesktop: "Yeni sifariş və ya endirimlər haqqında məlumat",
+                exampleNotificationTitleMobile: "Bu cür bildirişlər alacaqsınız",
+                exampleNotificationMessageMobile: "Yeni sifariş və ya endirimlər haqqında məlumat",
+                acceptButton: "İcazə ver",
+                cancelButton: "Xeyr",
+                showCredit: false
+            }
+        });
+        
+        // Subscribe user automatically after permission granted
+        OneSignal.on('subscriptionChange', function (isSubscribed) {
+            if (isSubscribed) {
+                OneSignal.getUserId().then(function(userId) {
+                    if (userId) {
+                        // Send user ID to server to store in database
+                        fetch('<?= SITE_URL ?>/api/update-push-token.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                user_id: '<?= $auth->isLoggedIn() ? $currentUser['id'] : '' ?>',
+                                push_token: userId
+                            })
+                        });
+                    }
+                });
+            }
+        });
+    });
     </script>
+    
+    <!-- OneSignal SDK -->
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 
     <?php if (isset($extraScripts)) echo $extraScripts; ?>
 </body>

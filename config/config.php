@@ -21,6 +21,14 @@ define('HASH_SALT', 'alumpro_az_salt_!@#$%^&*()'); // Change this to a unique ra
 define('DEFAULT_LANG', 'az');
 define('DEFAULT_TIMEZONE', 'Asia/Baku');
 
+// OneSignal Configuration
+define('ONESIGNAL_APP_ID', 'your-onesignal-app-id'); // Change to your OneSignal App ID
+define('ONESIGNAL_REST_API_KEY', 'your-onesignal-rest-api-key'); // Change to your OneSignal REST API Key
+
+// WhatsApp Business API Configuration
+define('WHATSAPP_BUSINESS_ID', 'your-whatsapp-business-id');
+define('WHATSAPP_ACCESS_TOKEN', 'your-whatsapp-access-token');
+
 // Set timezone
 date_default_timezone_set(DEFAULT_TIMEZONE);
 
